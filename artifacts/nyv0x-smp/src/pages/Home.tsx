@@ -95,7 +95,7 @@ export default function Home() {
                 See what's built
               </a>
               <a 
-                href="#map"
+                href="/map"
                 className="border border-muted-border text-muted-foreground hover:text-secondary hover:border-secondary px-8 py-4 uppercase tracking-widest transition-colors flex items-center gap-2"
               >
                 View Map
@@ -191,58 +191,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* MAP SECTION */}
-        <section id="map">
-          <SectionHeader>Live Map</SectionHeader>
-          <p className="text-muted-foreground font-sans font-light mb-6 max-w-2xl">
-            Explore the world in real time on Nyv0xMap. See what's been built without opening the game.
-          </p>
-          {BLUEMAP_URL ? (
-            <div className="border border-primary/30 bg-card flex flex-col items-center justify-start gap-6 min-h-[400px] py-8 text-center px-6">
-              <Terminal className="w-8 h-8 text-secondary opacity-60" />
-              <div>
-                <div className="font-mono text-white uppercase tracking-widest text-sm">Nyv0xMap</div>
-                <p className="text-muted-foreground font-sans font-light mt-2 max-w-md">
-                  Explore the world in real time, right in your browser.
-                </p>
-              </div>
-              <div className="relative mt-2 w-full max-w-5xl mx-auto overflow-hidden rounded-2xl border border-primary/40 bg-background shadow-[0_0_50px_rgba(34,211,238,0.2)]">
-                <div className="flex items-center justify-between border-b border-border/60 bg-card px-3 py-2 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-                  <span>Nyv0xMap live preview</span>
-                  <span className="text-secondary">LIVE</span>
-                </div>
-                <div className="relative h-[320px] w-full bg-background">
-                  <iframe
-                    src={BLUEMAP_URL}
-                    title="Nyv0xMap live preview"
-                    className="h-full w-full border-0"
-                    loading="lazy"
-                  />
-                </div>
-                <div className="border-t border-border/60 bg-card/80 px-3 py-3">
-                  <a
-                    href={BLUEMAP_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-3 bg-secondary text-secondary-foreground font-bold px-8 py-4 uppercase tracking-widest hover:bg-secondary/90 transition-colors"
-                  >
-                    Open Nyv0xMap <ExternalLink className="w-5 h-5" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="border border-dashed border-muted-border bg-card flex flex-col items-center justify-center gap-4 h-[400px] text-center px-6">
-              <Terminal className="w-8 h-8 text-secondary opacity-60" />
-              <div>
-                <div className="font-mono text-muted-foreground uppercase tracking-widest text-sm">Nyv0xMap coming soon</div>
-                <p className="text-muted-foreground font-sans font-light mt-2 max-w-md">
-                  The live map viewer is being set up. Check back shortly, or join the Discord for updates.
-                </p>
-              </div>
-            </div>
-          )}
-        </section>
 
         {/* RULES SECTION */}
         <section id="rules" className="max-w-4xl">
