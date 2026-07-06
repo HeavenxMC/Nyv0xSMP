@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { Link } from "wouter";
 import { Terminal, ShieldAlert, Cpu, Server, Users, ArrowRight, Copy, Check, ExternalLink } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -51,11 +51,7 @@ export default function Home() {
           <div className="hidden md:flex items-center gap-8 text-sm uppercase tracking-wider">
             <a href="#about" className="text-muted-foreground hover:text-primary transition-colors">About</a>
             <a href="#features" className="text-muted-foreground hover:text-primary transition-colors">Features</a>
-<<<<<<< HEAD
-            <a href="#map" className="text-muted-foreground hover:text-primary transition-colors">Map</a>
-=======
-            <a href="/map" className="text-muted-foreground hover:text-primary transition-colors">Map</a>
->>>>>>> pages-deploy
+            <Link href="/map" className="text-muted-foreground hover:text-primary transition-colors">Map</Link>
             <a href="#rules" className="text-muted-foreground hover:text-primary transition-colors">Rules</a>
           </div>
           <a 
@@ -75,13 +71,13 @@ export default function Home() {
         <section className="flex flex-col lg:flex-row gap-12 items-center min-h-[60vh]">
           <div className="flex-1 flex flex-col gap-6 items-start">
             <div className="text-secondary text-sm font-mono uppercase tracking-widest border border-secondary/30 px-3 py-1 bg-secondary/5">
-              Open survival · est. 2026
+              Open survival Â· est. 2026
             </div>
             <h1 className="text-5xl md:text-7xl font-bold tracking-tighter glitch-text text-white">
               NYV0X <span className="text-primary">SMP</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl font-sans font-light">
-              A long-term survival world where every chunk you load is one someone else already built on. No resets, no plugins that hold your hand — just a persistent map, a small community, and whatever you make of it.
+              A long-term survival world where every chunk you load is one someone else already built on. No resets, no plugins that hold your hand â€” just a persistent map, a small community, and whatever you make of it.
             </p>
             <div className="flex flex-wrap gap-4 mt-4">
               <a 
@@ -215,7 +211,7 @@ export default function Home() {
           
           <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white uppercase tracking-tighter">Spawn is waiting.</h2>
           <p className="text-muted-foreground max-w-xl mx-auto mb-10 text-lg">
-            The server is open now — no whitelist required. A whitelist application is coming soon, so join the Discord early to lock in your spot.
+            The server is open now â€” no whitelist required. A whitelist application is coming soon, so join the Discord early to lock in your spot.
           </p>
           <a 
             href={DISCORD_URL}
@@ -233,7 +229,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-foreground uppercase tracking-widest">
           <div className="flex items-center gap-2">
             <Terminal className="w-4 h-4 text-primary" />
-            <span>nyv0x.smp — not affiliated with Mojang or Microsoft</span>
+            <span>nyv0x.smp â€” not affiliated with Mojang or Microsoft</span>
           </div>
           <div className="flex gap-6">
             <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Discord</a>
