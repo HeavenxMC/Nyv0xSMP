@@ -34,7 +34,7 @@ jobs:
       - run: pnpm --dir artifacts/nyv0x-smp build
         env:
           PORT: 4173
-          BASE_PATH: /Nyv0xSMP/
+          BASE_PATH: /
       - run: cp artifacts/nyv0x-smp/dist/public/index.html artifacts/nyv0x-smp/dist/public/404.html
       - uses: actions/upload-pages-artifact@v3
         with:
