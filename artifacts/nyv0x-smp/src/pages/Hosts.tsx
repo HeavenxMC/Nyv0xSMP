@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "wouter";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 
-const MAP_URL = "http://maps.nyvox.xyz:45779/#world:-375:0:-460:6098:-2.55:0:0:0:perspective";
+const MAP_URL = "http://maps.nyvox.xyz:45779/";
 
 export default function Hosts() {
   return (
