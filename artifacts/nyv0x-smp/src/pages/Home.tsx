@@ -51,7 +51,7 @@ export default function Home() {
           <div className="hidden md:flex items-center gap-8 text-sm uppercase tracking-wider">
             <a href="#about" className="text-muted-foreground hover:text-primary transition-colors">About</a>
             <a href="#features" className="text-muted-foreground hover:text-primary transition-colors">Features</a>
-            <a href="#map" className="text-muted-foreground hover:text-primary transition-colors">Map</a>
+            <a href="/map" className="text-muted-foreground hover:text-primary transition-colors">Map</a>
             <a href="#rules" className="text-muted-foreground hover:text-primary transition-colors">Rules</a>
           </div>
           <a 
