@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nyv0x SMP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void: #0a0a0f;
+    --panel: #131319;
+    --panel-2: #1a1a23;
+    --line: #26262f;
+    --bone: #ece9f5;
+    --dim: #8b899c;
+    --phosphor: #6dffb0;
+    --phosphor-dim: #3a8f65;
+    --nyx: #a48bff;
+    --ember: #ff9a5c;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--void);
+    color:var(--bone);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  ::selection{ background:var(--phosphor); color:var(--void); }
+
+  a{ color:inherit; text-decoration:none; }
+
+  .mono{ font-family:'Space Mono', monospace; }
+
+  /* ---------- layout helpers ---------- */
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 28px; }
+  section{ position:relative; padding:110px 0; }
+
+  .eyebrow{
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--phosphor);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px; height:1px;
+    background:var(--phosphor-dim);
+  }
+
+  h1,h2,h3{ font-weight:400; }
+
+  /* ---------- nav ---------- */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    background:rgba(10,10,15,0.75);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:64px;
+  }
+  .brand{
+    font-family:'Space Mono', monospace;
+    font-weight:700;
+    font-size:17px;
+    letter-spacing:0.02em;
+  }
+  .brand span{ color:var(--phosphor); }
+  .navlinks{ display:flex; gap:30px; font-size:13px; color:var(--dim); }
+  .navlinks a:hover{ color:var(--bone); }
+  .navcta{
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    padding:8px 16px;
+    border:1px solid var(--phosphor-dim);
+    color:var(--phosphor);
+    border-radius:3px;
+    transition:all .15s ease;
+  }
+  .navcta:hover{ background:var(--phosphor); color:var(--void); }
+
+  @media (max-width:720px){ .navlinks{ display:none; } }
+
+  /* ---------- hero ---------- */
+  .hero{
+    min-height:100vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding-top:64px;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:56px 56px;
+    background-position:center;
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 30%, transparent 85%);
+            mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 30%, transparent 85%);
+  }
+  .hero-inner{
+    -webkit-mask-image:none; mask-image:none;
+    display:flex; flex-direction:column; align-items:center;
+  }
+  .hero .eyebrow{ justify-content:center; }
+  .hero .eyebrow::before{ display:none; }
+
+  .title{
+    font-family:'Space Mono', monospace;
+    font-weight:700;
+    font-size:clamp(56px, 12vw, 128px);
+    line-height:0.95;
+    letter-spacing:-0.01em;
+  }
+  .title .flick{
+    color:var(--nyx);
+    display:inline-block;
+  }
+  .title .flick.glitching{ color: var(--phosphor); }
+
+  .subtitle{
+    max-width:520px;
+    color:var(--dim);
+    font-size:16px;
+    margin:22px 0 44px;
+  }
+
+  .terminal{
+    width:100%;
+    max-width:460px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:6px;
+    text-align:left;
+    overflow:hidden;
+    margin-bottom:28px;
+  }
+  .terminal-bar{
+    display:flex; align-items:center; gap:6px;
+    padding:9px 14px;
+    border-bottom:1px solid var(--line);
+    background:var(--panel-2);
+  }
+  .terminal-bar span{
+    width:8px; height:8px; border-radius:50%;
+    background:var(--line);
+  }
+  .terminal-bar .label{
+    margin-left:8px;
+    font-family:'Space Mono', monospace;
+    font-size:11px;
+    color:var(--dim);
+  }
+  .terminal-body{
+    padding:16px 18px 18px;
+    font-family:'Space Mono', monospace;
+    font-size:14px;
+  }
+  .terminal-row{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:12px;
+  }
+  .terminal-row .prompt{ color:var(--phosphor-dim); }
+  .terminal-row .ip{
+    color:var(--phosphor);
+    font-weight:700;
+    cursor:pointer;
+    border-bottom:1px dashed var(--phosphor-dim);
+  }
+  .terminal-meta{
+    margin-top:10px;
+    font-size:12px;
+    color:var(--dim);
+    display:flex; gap:16px; flex-wrap:wrap;
+  }
+  .terminal-meta b{ color:var(--bone); font-weight:400; }
+  .copy-toast{
+    font-size:11px; color:var(--phosphor);
+    height:14px; margin-top:8px;
+    opacity:0; transition:opacity .2s ease;
+  }
+  .copy-toast.show{ opacity:1; }
+
+  .cta-row{ display:flex; gap:14px; flex-wrap:wrap; justify-content:center; }
+  .btn{
+    font-family:'Space Mono', monospace;
+    font-size:13px;
+    padding:14px 26px;
+    border-radius:4px;
+    display:inline-flex; align-items:center; gap:9px;
+    border:1px solid transparent;
+    cursor:pointer;
+    transition:transform .15s ease, background .15s ease, border-color .15s ease;
+  }
+  .btn:active{ transform:scale(0.97); }
+  .btn-primary{
+    background:var(--phosphor);
+    color:var(--void);
+    font-weight:700;
+  }
+  .btn-primary:hover{ background:#8dffc2; }
+  .btn-outline{
+    border-color:var(--line);
+    color:var(--bone);
+    background:transparent;
+  }
+  .btn-outline:hover{ border-color:var(--dim); }
+  .btn svg{ width:16px; height:16px; }
+
+  /* ---------- about strip ---------- */
+  .about{
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    background:var(--panel);
+  }
+  .about p{
+    max-width:720px;
+    font-size:19px;
+    color:var(--bone);
+  }
+  .about strong{ color:var(--nyx); font-weight:600; }
+
+  /* ---------- features ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    margin-top:50px;
+  }
+  @media (max-width:760px){ .grid{ grid-template-columns:1fr; } }
+
+  .card{
+    background:var(--void);
+    padding:32px 28px;
+  }
+  .card .tag{
+    font-family:'Space Mono', monospace;
+    font-size:11px;
+    color:var(--phosphor-dim);
+    letter-spacing:0.1em;
+  }
+  .card h3{
+    font-family:'Space Mono', monospace;
+    font-size:18px;
+    margin:12px 0 10px;
+    color:var(--bone);
+  }
+  .card p{ color:var(--dim); font-size:14px; }
+
+  /* ---------- rules ---------- */
+  .rules-list{
+    margin-top:40px;
+    border-top:1px solid var(--line);
+  }
+  .rule{
+    display:flex; gap:20px;
+    padding:22px 0;
+    border-bottom:1px solid var(--line);
+    align-items:flex-start;
+  }
+  .rule .prompt{
+    font-family:'Space Mono', monospace;
+    color:var(--phosphor-dim);
+    font-size:14px;
+    padding-top:2px;
+    flex-shrink:0;
+  }
+  .rule p{ color:var(--dim); font-size:15px; }
+  .rule strong{ color:var(--bone); font-weight:500; }
+
+  /* ---------- join band ---------- */
+  .join{
+    text-align:center;
+    background:var(--panel);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .join h2{
+    font-family:'Space Mono', monospace;
+    font-size:clamp(30px, 5vw, 46px);
+    margin-bottom:16px;
+  }
+  .join .nyx{ color:var(--nyx); }
+  .join p{ color:var(--dim); max-width:460px; margin:0 auto 34px; }
+
+  /* ---------- footer ---------- */
+  footer{ padding:50px 0 40px; }
+  footer .wrap{
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;
+  }
+  .socials{ display:flex; gap:22px; }
+  .socials a{ color:var(--dim); transition:color .15s ease; }
+  .socials a:hover{ color:var(--phosphor); }
+  .fineprint{ color:var(--dim); font-size:12px; font-family:'Space Mono', monospace; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">NYV<span>0X</span></div>
+    <div class="navlinks">
+      <a href="#about">About</a>
+      <a href="#features">Features</a>
+      <a href="#rules">Rules</a>
+    </div>
+    <a class="navcta" href="https://discord.com/invite/RpdjvHMXD9" target="_blank" rel="noopener">Join server</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner wrap">
+    <div class="eyebrow mono">Whitelisted survival · est. 2026</div>
+    <h1 class="title mono">NYV<span class="flick" id="flick">0X</span><br>SMP</h1>
+    <p class="subtitle">A long-term survival world where every chunk you load is one someone else already built on. No resets, no plugins that hold your hand — just a persistent map, a small community, and whatever you make of it.</p>
+
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span></span><span></span><span></span>
+        <span class="label">connect.sh</span>
+      </div>
+      <div class="terminal-body">
+        <div class="terminal-row">
+          <span><span class="prompt">$</span> java -jar connect</span>
+          <span class="ip" id="ip-text" title="Click to copy">play.nyv0x.net</span>
+        </div>
+        <div class="terminal-meta">
+          <span>version <b>1.21.x</b></span>
+          <span>whitelist <b>open</b></span>
+          <span>players online <b>—</b></span>
+        </div>
+        <div class="copy-toast" id="copy-toast">copied to clipboard</div>
+      </div>
+    </div>
+
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://discord.com/invite/RpdjvHMXD9" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.369A19.79 19.79 0 0 0 16.558 3c-.211.375-.444.874-.608 1.269a18.27 18.27 0 0 0-3.9 0A11.9 11.9 0 0 0 11.442 3a19.74 19.74 0 0 0-3.762 1.371C4.99 8.115 4.246 11.77 4.618 15.375A19.9 19.9 0 0 0 8.63 17.5c.328-.447.62-.923.87-1.425a12.9 12.9 0 0 1-1.372-.658c.115-.084.228-.171.337-.26 2.646 1.223 5.51 1.223 8.124 0 .11.09.223.176.337.26-.436.26-.895.483-1.372.658.25.502.542.978.87 1.425a19.85 19.85 0 0 0 4.012-2.125c.436-4.183-.66-7.804-2.977-11.006ZM9.68 13.135c-.795 0-1.446-.735-1.446-1.638 0-.902.635-1.638 1.446-1.638.812 0 1.462.736 1.446 1.638 0 .903-.634 1.638-1.446 1.638Zm4.64 0c-.795 0-1.446-.735-1.446-1.638 0-.902.634-1.638 1.446-1.638.812 0 1.462.736 1.446 1.638 0 .903-.634 1.638-1.446 1.638Z"/></svg>
+        Join the Discord
+      </a>
+      <a class="btn btn-outline" href="#features">See what's built</a>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="eyebrow mono">// about</div>
+    <p>Nyv0x runs on one map, one economy, and one rule set for as long as people keep showing up. It's built for players who want their base to still be there in six months — <strong>no seasonal wipes, no pay-to-win, no drama nobody signed up for.</strong> Just replace this paragraph with your own server's story.</p>
+  </div>
+</section>
+
+<section id="features">
+  <div class="wrap">
+    <div class="eyebrow mono">// features</div>
+    <h2 class="mono" style="font-size:clamp(26px,4vw,38px);">What you're logging into</h2>
+
+    <div class="grid">
+      <div class="card">
+        <div class="tag mono">SURVIVAL</div>
+        <h3>Vanilla-plus core</h3>
+        <p>Light quality-of-life datapacks only — no gameplay-altering plugins. If it works in single-player, it works here.</p>
+      </div>
+      <div class="card">
+        <div class="tag mono">ECONOMY</div>
+        <h3>Player-run market</h3>
+        <p>Shops are built and priced by players, not admins. Trade routes and prices are entirely community driven.</p>
+      </div>
+      <div class="card">
+        <div class="tag mono">EVENTS</div>
+        <h3>Community events</h3>
+        <p>Regular build contests, boss fights, and market days — schedule posted in Discord every week.</p>
+      </div>
+      <div class="card">
+        <div class="tag mono">STAFF</div>
+        <h3>Active, low-ego mods</h3>
+        <p>Small staff team that plays on the same map as everyone else and actually answers reports.</p>
+      </div>
+      <div class="card">
+        <div class="tag mono">UPTIME</div>
+        <h3>Backed up, always on</h3>
+        <p>Hourly backups and a host that doesn't go down mid-build. Your work is never one crash from gone.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="rules">
+  <div class="wrap">
+    <div class="eyebrow mono">// rules</div>
+    <h2 class="mono" style="font-size:clamp(26px,4vw,38px);">Before you spawn in</h2>
+
+    <div class="rules-list">
+      <div class="rule">
+        <span class="prompt">$</span>
+        <p><strong>Be someone people want to build near.</strong> Harassment, hate speech, and chat drama get you removed — no warnings needed for the serious stuff.</p>
+      </div>
+      <div class="rule">
+        <span class="prompt">$</span>
+        <p><strong>No griefing, stealing, or hacked clients.</strong> Claim your land early. Unclaimed builds are fair game for reclaiming resources, not destruction.</p>
+      </div>
+      <div class="rule">
+        <span class="prompt">$</span>
+        <p><strong>Lag machines get removed on sight.</strong> Farms are welcome; farms that halve everyone's tick rate are not.</p>
+      </div>
+      <div class="rule">
+        <span class="prompt">$</span>
+        <p><strong>Keep builds within a reasonable distance of spawn.</strong> Nobody wants to render a base at coordinate 40,000.</p>
+      </div>
+      <div class="rule">
+        <span class="prompt">$</span>
+        <p><strong>Disputes go to staff, not chat.</strong> Screenshot it, DM a mod, let them sort it out.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="join" id="join">
+  <div class="wrap">
+    <h2>Spawn is waiting<span class="nyx">.</span></h2>
+    <p>Grab the whitelist form in Discord, drop your username, and you'll usually be added within the day.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://discord.com/invite/RpdjvHMXD9" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.369A19.79 19.79 0 0 0 16.558 3c-.211.375-.444.874-.608 1.269a18.27 18.27 0 0 0-3.9 0A11.9 11.9 0 0 0 11.442 3a19.74 19.74 0 0 0-3.762 1.371C4.99 8.115 4.246 11.77 4.618 15.375A19.9 19.9 0 0 0 8.63 17.5c.328-.447.62-.923.87-1.425a12.9 12.9 0 0 1-1.372-.658c.115-.084.228-.171.337-.26 2.646 1.223 5.51 1.223 8.124 0 .11.09.223.176.337.26-.436.26-.895.483-1.372.658.25.502.542.978.87 1.425a19.85 19.85 0 0 0 4.012-2.125c.436-4.183-.66-7.804-2.977-11.006ZM9.68 13.135c-.795 0-1.446-.735-1.446-1.638 0-.902.635-1.638 1.446-1.638.812 0 1.462.736 1.446 1.638 0 .903-.634 1.638-1.446 1.638Zm4.64 0c-.795 0-1.446-.735-1.446-1.638 0-.902.634-1.638 1.446-1.638.812 0 1.462.736 1.446 1.638 0 .903-.634 1.638-1.446 1.638Z"/></svg>
+        Join the Discord
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fineprint">nyv0x.smp — not affiliated with Mojang or Microsoft</div>
+    <div class="socials">
+      <a href="https://discord.com/invite/RpdjvHMXD9" target="_blank" rel="noopener" aria-label="Discord">Discord</a>
+      <a href="https://www.youtube.com/@nyvox0" target="_blank" rel="noopener" aria-label="YouTube">YouTube</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // copy IP to clipboard
+  const ipEl = document.getElementById('ip-text');
+  const toast = document.getElementById('copy-toast');
+  ipEl.addEventListener('click', () => {
+    const text = ipEl.textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1500);
+    });
+  });
+
+  // occasional glitch flicker on the "0X" of the title
+  const flick = document.getElementById('flick');
+  const chars = ['0X','0x','9F','A3','0X'];
+  function glitch(){
+    let i = 0;
+    flick.classList.add('glitching');
+    const iv = setInterval(() => {
+      flick.textContent = chars[i % chars.length];
+      i++;
+      if(i > 6){
+        clearInterval(iv);
+        flick.textContent = '0X';
+        flick.classList.remove('glitching');
+      }
+    }, 70);
+  }
+  setInterval(glitch, 5000);
+</script>
+
+</body>
+</html>
