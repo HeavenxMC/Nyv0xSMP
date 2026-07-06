@@ -22,29 +22,45 @@ export default function Hosts() {
           </div>
 
           <div className="overflow-hidden rounded-xl border border-border/60 bg-background">
-            {isSecurePage ? (
-              <div className="flex h-[70vh] flex-col items-center justify-center gap-4 bg-background p-8 text-center">
-                <p className="text-lg font-semibold text-primary">The live map cannot be embedded from this secure page.</p>
-                <p className="max-w-xl text-sm text-muted-foreground">
-                  Open the map directly in a new tab to view the hosted world.
+            <div className="flex min-h-[70vh] flex-col justify-between gap-6 bg-[radial-gradient(circle_at_top_left,_rgba(34,211,238,0.15),_transparent_40%),linear-gradient(135deg,_rgba(10,15,24,1),_rgba(8,12,18,1))] p-8">
+              <div className="space-y-4">
+                <div className="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.35em] text-primary">
+                  Live preview
+                </div>
+                <h2 className="text-2xl font-semibold tracking-tight text-white">
+                  Explore the hosted world from the browser.
+                </h2>
+                <p className="max-w-2xl text-sm leading-7 text-muted-foreground">
+                  The direct map viewer is hosted on an HTTP endpoint, so GitHub Pages cannot embed it inline. This preview card keeps the experience alive with a strong call to action and a clear path to the live map.
                 </p>
-                <a
-                  href={MAP_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-primary/40 px-5 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
-                >
-                  Open map <ExternalLink className="h-4 w-4" />
-                </a>
               </div>
-            ) : (
-              <iframe
-                src={MAP_URL}
-                title="Nyv0x hosts map"
-                className="h-[70vh] w-full border-0"
-                loading="lazy"
-              />
-            )}
+
+              <div className="grid gap-4 rounded-2xl border border-border/60 bg-background/70 p-6 md:grid-cols-[1.2fr_0.8fr]">
+                <div className="space-y-3">
+                  <p className="text-xs font-semibold uppercase tracking-[0.35em] text-secondary">Map endpoint</p>
+                  <p className="break-all font-mono text-sm text-primary">{MAP_URL}</p>
+                  <p className="text-sm text-muted-foreground">
+                    Open the map in a new tab for the full interactive view and coordinates.
+                  </p>
+                </div>
+                <div className="flex flex-col justify-end gap-3">
+                  <a
+                    href={MAP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-primary/40 bg-primary px-5 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-primary-foreground transition-colors hover:bg-primary/90"
+                  >
+                    Open live map <ExternalLink className="h-4 w-4" />
+                  </a>
+                  <a
+                    href="/"
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-border/60 px-5 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-muted-foreground transition-colors hover:text-primary"
+                  >
+                    Back home
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
