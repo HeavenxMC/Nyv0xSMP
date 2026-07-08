@@ -71,7 +71,7 @@ export default function Home() {
         <section className="flex flex-col lg:flex-row gap-12 items-center min-h-[60vh]">
           <div className="flex-1 flex flex-col gap-6 items-start">
             <div className="text-secondary text-sm font-mono uppercase tracking-widest border border-secondary/30 px-3 py-1 bg-secondary/5">
-              Open survival Â· est. 2026
+              Open survival  est. 2026
             </div>
             <h1 className="text-5xl md:text-7xl font-bold tracking-tighter glitch-text text-white">
               NYV0X <span className="text-primary">SMP</span>
@@ -211,7 +211,7 @@ export default function Home() {
           
           <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white uppercase tracking-tighter">Spawn is waiting.</h2>
           <p className="text-muted-foreground max-w-xl mx-auto mb-10 text-lg">
-            The server is open now â€” no whitelist required. A whitelist application is coming soon, so join the Discord early to lock in your spot.
+            The server is open now no whitelist required. A whitelist application is coming soon, so join the Discord early to lock in your spot.
           </p>
           <a 
             href={DISCORD_URL}
@@ -229,7 +229,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-foreground uppercase tracking-widest">
           <div className="flex items-center gap-2">
             <Terminal className="w-4 h-4 text-primary" />
-            <span>nyv0x.smp â€” not affiliated with Mojang or Microsoft</span>
+            <span>nyv0x.smp — Developed by nyv0x</span>
           </div>
           <div className="flex gap-6">
             <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Discord</a>
