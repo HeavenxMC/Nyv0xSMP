@@ -77,7 +77,7 @@ export default function Home() {
               NYV0X <span className="text-primary">SMP</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl font-sans font-light">
-              A long-term survival world where every chunk you load is one someone else already built on. No resets, no plugins that hold your hand â€” just a persistent map, a small community, and whatever you make of it.
+              A long-term survival world where every chunk you load is one someone else already built on. No resets, no plugins that hold your hand just a persistent map, a small community, and whatever you make of it.
             </p>
             <div className="flex flex-wrap gap-4 mt-4">
               <a 
